@@ -1,5 +1,5 @@
-import express, {Request, Response} from 'express';
-import { query, validationResult} from 'express-validator';
+import express, { Request, Response } from 'express';
+import { query, validationResult } from 'express-validator';
 
 const router = express.Router();
 
