@@ -3,11 +3,16 @@ services:
   database:
     image: mongo
     restart: always
-    environment:
-      - MONGO_INITDB_ROOT_USERNAME=my-username
-      - MONGO_INITDB_ROOT_PASSWORD=my-root-password
     volumes:
       - volume:/data/db
+
+  database-seed:
+    build:
+      context: ./database_seed
+      dockerfile: Dockerfile
+    depends_on:
+      - database
+  
   server:
     build:
       context: ./
