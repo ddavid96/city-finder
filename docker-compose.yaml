@@ -21,7 +21,6 @@ services:
       - database
     volumes:
       - /node_modules
-      - ./node-web:/app
     ports:
       - "5000:5000"
 
