@@ -3,8 +3,6 @@ services:
   database:
     image: mongo
     restart: always
-    volumes:
-      - volume:/data/db
 
   database-seed:
     build:
@@ -23,6 +21,3 @@ services:
       - /node_modules
     ports:
       - "5000:5000"
-
-volumes:
-  volume:
