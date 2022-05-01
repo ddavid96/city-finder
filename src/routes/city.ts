@@ -1,16 +1,9 @@
 import express, { Request, Response } from 'express';
 import { query, validationResult } from 'express-validator';
+import IQuery from '../types/IQuery';
 import { db } from '../utils/mongoUtils';
 
 const router = express.Router();
-
-interface IQuery {
-    q: String,
-    latitude: number,
-    longitude: number,
-    radius: number,
-    sort: number,
-}
 
 const queryStringValidators = [
     query('q').isString().isLength({ min: 1 }),
@@ -34,9 +27,9 @@ router.get('/suggestions', queryStringValidators, (req: Request, res: Response) 
                     type: "Point",
                     coordinates: [Number(longitude), Number(latitude)],
                 },
-                maxDistance: Number(radius),
+                maxDistance: Number(radius) * 1000,
                 distanceField: "distance",
-                "distanceMultiplier": 0.001,
+                distanceMultiplier: 0.001,
                 spherical: true,
                 query: {
                     name: {
@@ -48,7 +41,17 @@ router.get('/suggestions', queryStringValidators, (req: Request, res: Response) 
         }])
         .sort({ [`${sort}`]: 1 })
         .toArray()
-        .then((cities) => res.json({ suggestions: cities }))
+        .then((cities) => res.json({
+            suggestions: cities.map(city => {
+                const { name, location, distance } = city;
+                return {
+                    name,
+                    latitude: location.coordinates[1],
+                    longitude: location.coordinates[0],
+                    distance,
+                };
+            }),
+        }))
         .catch((error) => res.status(500).json({ error }));
 });
 

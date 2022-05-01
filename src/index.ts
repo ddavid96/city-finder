@@ -4,6 +4,7 @@ import { cityRouter } from './routes/city';
 import { connect } from './utils/mongoUtils';
 
 const app = express();
+
 app.use(json());
 app.use(cityRouter);
 
