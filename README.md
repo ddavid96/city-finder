@@ -14,7 +14,7 @@ The server will be available at http://localhost:5000/
 
 Use Postman or another tool of your choice to make requests to the server.
 
-The request must be a POST request
+The request must be a GET request
 to the `suggestions` endpoint with the following query parameters (parameters are validated):
 
 `q`: String, required.
