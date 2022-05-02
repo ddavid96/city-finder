@@ -8,7 +8,7 @@ const app = express();
 
 
 const limiter = rateLimit({
-    windowMs: 60 * 1000, // 1 minutes
+    windowMs: 60 * 1000, // 1 minute
     max: 5,
     standardHeaders: true,
 })
